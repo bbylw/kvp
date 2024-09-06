@@ -1,26 +1,34 @@
 export async function onRequest(context) {
   const { request, env } = context;
-  const url = new URL(request.url);
 
   if (request.method === 'GET') {
-    const links = await env.LINKS_KV.get('all_links', 'json') || getDefaultLinks();
+    const links = await getLinks(env);
     return new Response(JSON.stringify(links), {
       headers: { 'Content-Type': 'application/json' },
     });
   } else if (request.method === 'POST') {
     const data = await request.json();
-    let links = await env.LINKS_KV.get('all_links', 'json') || getDefaultLinks();
-    const index = links.findIndex(link => link.url === data.url);
-    if (index > -1) {
-      links[index] = data;
-    } else {
-      links.push(data);
-    }
-    await env.LINKS_KV.put('all_links', JSON.stringify(links));
+    await saveLink(env, data);
     return new Response('Link saved', { status: 200 });
   }
 
   return new Response('Not found', { status: 404 });
+}
+
+async function getLinks(env) {
+  const storedLinks = await env.LINKS_KV.get('all_links');
+  return storedLinks ? JSON.parse(storedLinks) : getDefaultLinks();
+}
+
+async function saveLink(env, newLink) {
+  const links = await getLinks(env);
+  const index = links.findIndex(link => link.url === newLink.url);
+  if (index > -1) {
+    links[index] = newLink;
+  } else {
+    links.push(newLink);
+  }
+  await env.LINKS_KV.put('all_links', JSON.stringify(links));
 }
 
 function getDefaultLinks() {
@@ -43,8 +51,6 @@ function getDefaultLinks() {
     { category: 'ai-search', title: 'huggingface', url: 'https://huggingface.co/', icon: 'fas fa-meh-rolling-eyes' },
     { category: 'ai-search', title: 'lmarena', url: 'https://lmarena.ai/', icon: 'fas fa-robot' },
     { category: 'ai-search', title: 'kelaode', url: 'https://kelaode.ai/', icon: 'fas fa-robot' },
-
-     icon: 'fas fa-robot' },
 
     // 社交媒体
     { category: 'social', title: 'Facebook', url: 'https://www.facebook.com', icon: 'fab fa-facebook' },
