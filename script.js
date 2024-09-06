@@ -11,7 +11,15 @@ document.addEventListener('DOMContentLoaded', function() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(linkData),
+      body: JSON.stringify({
+        password: linkData.edit_password,
+        link: {
+          category: linkData.category,
+          title: linkData.title,
+          url: linkData.url,
+          icon: linkData.icon
+        }
+      }),
     });
 
     if (response.ok) {
@@ -19,7 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
       fetchLinks();
       this.reset();
     } else {
-      alert('保存失败');
+      const errorText = await response.text();
+      alert('保存失败: ' + errorText);
     }
   });
 
