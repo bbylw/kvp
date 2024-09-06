@@ -7,8 +7,14 @@ export async function onRequest(context) {
       headers: { 'Content-Type': 'application/json' },
     });
   } else if (request.method === 'POST') {
-    const data = await request.json();
-    await saveLink(env, data);
+    const { password, link } = await request.json();
+    
+    // 验证密码
+    if (password !== env.EDIT_PASSWORD) {
+      return new Response('Unauthorized: Incorrect password', { status: 401 });
+    }
+    
+    await saveLink(env, link);
     return new Response('Link saved', { status: 200 });
   }
 
@@ -47,7 +53,7 @@ function getDefaultLinks() {
     { category: 'ai-search', title: '循证医学UTD', url: 'http://u.90tsg.com/', icon: 'fas fa-clinic-medical' },
     { category: 'ai-search', title: 'medscape', url: 'https://www.medscape.com/', icon: 'fas fa-stethoscope' },
     { category: 'ai-search', title: '免费oaichat', url: 'https://chat.oaichat.cc/', icon: 'fab fa-rocketchat' },
-    { category: 'ai-search', title: 'leonardo.ai绘图', url: 'https://app.leonardo.ai/', icon: 'far fa-images' },
+    { category: 'ai-search', title: 'leonardo.ai绘图', url: 'https://app.leonardo.ai/', icon: 'far fa-.leonardo.ai/', icon: 'far fa-images' },
     { category: 'ai-search', title: 'huggingface', url: 'https://huggingface.co/', icon: 'fas fa-meh-rolling-eyes' },
     { category: 'ai-search', title: 'lmarena', url: 'https://lmarena.ai/', icon: 'fas fa-robot' },
     { category: 'ai-search', title: 'kelaode', url: 'https://kelaode.ai/', icon: 'fas fa-robot' },
