@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebNav Hub</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+  <header>
+    <h1>WebNav Hub</h1>
+  </header>
+  <nav>
+    <ul>
+      <li><a href="#ai-search">Ai搜索</a></li>
+      <li><a href="#social">社交媒体</a></li>
+      <li><a href="#tools">实用工具</a></li>
+      <li><a href="#tech-news">科技资讯</a></li>
+      <li><a href="#cloud-storage">云存储</a></li>
+      <li><a href="#email">电子邮箱</a></li>
+    </ul>
+  </nav>
+  <main>
+    <section id="ai-search">
+      <h2 class="category-title">Ai搜索</h2>
+      <div class="link-grid"></div>
+    </section>
+    <section id="social">
+      <h2 class="category-title">社交媒体</h2>
+      <div class="link-grid"></div>
+    </section>
+    <section id="tools">
+      <h2 class="category-title">实用工具</h2>
+      <div class="link-grid"></div>
+    </section>
+    <section id="tech-news">
+      <h2 class="category-title">科技资讯</h2>
+      <div class="link-grid"></div>
+    </section>
+    <section id="cloud-storage">
+      <h2 class="category-title">云存储</h2>
+      <div class="link-grid"></div>
+    </section>
+    <section id="email">
+      <h2 class="category-title">电子邮箱</h2>
+      <div class="link-grid"></div>
+    </section>
+  </main>
+  <div id="edit-form" style="display: none;">
+    <h2>添加/编辑链接</h2>
+    <form id="link-form">
+      <select id="category" required>
+        <option value="">选择类别</option>
+        <option value="ai-search">Ai搜索</option>
+        <option value="social">社交媒体</option>
+        <option value="tools">实用工具</option>
+        <option value="tech-news">科技资讯</option>
+        <option value="cloud-storage">云存储</option>
+        <option value="email">电子邮箱</option>
+      </select>
+      <input type="text" id="title" placeholder="标题" required>
+      <input type="url" id="url" placeholder="URL" required>
+      <input type="text" id="icon" placeholder="图标类名" required>
+      <button type="submit">保存</button>
+    </form>
+  </div>
+  <button id="toggle-edit">编辑模式</button>
+  <footer>
+    <p>&copy; 2023 WebNav Hub. 保留所有权利。</p>
+    <nav>
+      <a href="#">隐私政策</a>
+      <a href="#">使用条款</a>
+      <a href="#">联系我们</a>
+    </nav>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
