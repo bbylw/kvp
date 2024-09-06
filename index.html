@@ -50,7 +50,8 @@
   <div id="edit-form" style="display: none;">
     <h2>添加/编辑链接</h2>
     <form id="link-form">
-      <select id="category" required>
+      <input type="password" id="edit-password" name="edit_password" placeholder="编辑密码" required>
+      <select id="category" name="category" required>
         <option value="">选择类别</option>
         <option value="ai-search">Ai搜索</option>
         <option value="social">社交媒体</option>
@@ -59,9 +60,9 @@
         <option value="cloud-storage">云存储</option>
         <option value="email">电子邮箱</option>
       </select>
-      <input type="text" id="title" placeholder="标题" required>
-      <input type="url" id="url" placeholder="URL" required>
-      <input type="text" id="icon" placeholder="图标类名" required>
+      <input type="text" id="title" name="title" placeholder="标题" required>
+      <input type="url" id="url" name="url" placeholder="URL" required>
+      <input type="text" id="icon" name="icon" placeholder="图标类名" required>
       <button type="submit">保存</button>
     </form>
   </div>
