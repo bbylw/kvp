@@ -1,6 +1,7 @@
 # WebNav Hub
 
 WebNav Hub是一个简洁、可自定义的网址导航页面,基于Cloudflare Pages构建。它允许用户轻松管理和访问常用网站链接,并支持在线编辑功能。
+![f1148d4aee92043fb7a0c.png](https://img.186404.xyz/file/5fbf538aeded6157ac7e8.png)
 
 ## 功能特点
 
