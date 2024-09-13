@@ -74,6 +74,28 @@ WebNav Hub是一个简洁、可自定义的网址导航页面,基于Cloudflare P
 - 编辑`styles.css`以更改页面样式
 - 在`functions/api/links.js`中的`getDefaultLinks()`函数里添加或修改默认链接
 
+- ## 删除新添加的链接
+
+对于部署在 Cloudflare Pages 上的导航页面，新添加的链接存储在 Cloudflare 的 KV (Key-Value) 存储中。要删除这些链接，请按照以下步骤操作：
+
+1. 访问 [Cloudflare Dashboard](https://dash.cloudflare.com/)
+
+2. 进入 "Workers & Pages" 部分
+
+3. 在左侧菜单中找到并点击 "KV"
+
+4. 找到您的 KV 命名空间（通常命名为 "LINKS_KV"）
+
+5. 在 KV 命名空间中，您应该能看到所有存储的键值对
+
+6. 找到您想要删除的链接对应的键
+
+7. 点击该键旁边的删除按钮（通常是一个垃圾桶图标）
+
+8. 确认删除操作
+
+请注意，删除操作是不可逆的。在删除之前，请确保您真的想要移除该链接。如果不确定，可以考虑先编辑链接内容，将其暂时隐藏或修改，而不是直接删除。
+
 ## 贡献
 
 欢迎提交问题和拉取请求来改进这个项目。
