@@ -315,7 +315,7 @@ function getDefaultLinks() {
     { category: 'ai-search', title: 'Artificial Analysis', url: 'https://artificialanalysis.ai/', icon: 'fa-solid fa-chart-line' },
     { category: 'ai-search', title: 'perchai.app', url: 'https://www.perchai.app/', icon: 'fa-solid fa-crow' },
 
-    // 社交媒体
+    // 托管社交
     { category: 'social', title: 'Facebook', url: 'https://www.facebook.com', icon: 'fa-brands fa-facebook' },
     { category: 'social', title: 'F-Droid', url: 'https://f-droid.org/', icon: 'fa-brands fa-android' },
     { category: 'social', title: '推特视频下载', url: 'https://twitterxz.com/', icon: 'fa-brands fa-x-twitter' },
