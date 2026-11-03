@@ -16,6 +16,8 @@ const state = {
 
 const els = {};
 let toastTimer = 0;
+let activeTargetId = '';
+let linksReady = false;
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -120,6 +122,10 @@ function bindEvents() {
   });
 
   window.addEventListener('hashchange', () => setActive(location.hash.slice(1)));
+  window.addEventListener('resize', () => {
+    const activeLink = els.nav.querySelector('a.active');
+    if (activeLink) revealNavLink(activeLink);
+  }, { passive: true });
 }
 
 async function loadLinks({ silent = false } = {}) {
@@ -144,6 +150,7 @@ async function loadLinks({ silent = false } = {}) {
     }
 
     state.links = data;
+    linksReady = true;
     clearStatus();
     renderLinks();
     resolveActiveSection();
@@ -462,15 +469,38 @@ function observeSections() {
 }
 
 function setActive(id) {
+  let activeLink = null;
+
   for (const link of els.nav.querySelectorAll('a[data-target]')) {
     const active = Boolean(id) && link.dataset.target === id;
     link.classList.toggle('active', active);
     if (active) {
       link.setAttribute('aria-current', 'true');
+      activeLink = link;
     } else {
       link.removeAttribute('aria-current');
     }
   }
+
+  if (activeLink && id !== activeTargetId) {
+    revealNavLink(activeLink);
+  }
+
+  activeTargetId = activeLink ? id : '';
+}
+
+function revealNavLink(link) {
+  if (!linksReady || els.nav.scrollWidth <= els.nav.clientWidth) return;
+
+  const linkRect = link.getBoundingClientRect();
+  const navRect = els.nav.getBoundingClientRect();
+  const offset =
+    (linkRect.left + linkRect.right) / 2 - (navRect.left + navRect.right) / 2;
+
+  if (Math.abs(offset) < 1) return;
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  els.nav.scrollBy({ left: offset, behavior: reduceMotion ? 'auto' : 'smooth' });
 }
 
 function resolveActiveSection() {
