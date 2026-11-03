@@ -3,78 +3,134 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WebNav Hub</title>
+  <title>WebNav Hub · 常用网址导航</title>
+  <meta name="description" content="简洁、快速、可自定义的网址导航页，收录 AI 搜索、社交媒体、实用工具、科技资讯、云存储与电子邮箱常用站点。">
+  <meta name="theme-color" content="#0d0d0d">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
 <body>
-  <header>
-    <h1>WebNav Hub</h1>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <h1>WebNav Hub</h1>
+      <p class="tagline">常用网址，一页直达</p>
+    </div>
   </header>
-  <nav>
-    <ul>
-      <li><a href="#ai-search">Ai搜索</a></li>
-      <li><a href="#social">社交媒体</a></li>
-      <li><a href="#tools">实用工具</a></li>
-      <li><a href="#tech-news">科技资讯</a></li>
-      <li><a href="#cloud-storage">云存储</a></li>
-      <li><a href="#email">电子邮箱</a></li>
-    </ul>
+
+  <nav class="site-nav" aria-label="分类导航">
+    <ul id="category-nav"></ul>
   </nav>
-  <main>
+
+  <main id="main" tabindex="-1">
+    <div id="load-status" class="status is-loading" role="status" aria-live="polite">
+      <span class="spinner" aria-hidden="true"></span>
+      <span id="status-text">正在加载链接…</span>
+      <button id="retry" type="button" class="btn btn-ghost btn-small" hidden>重试</button>
+    </div>
+
     <section id="ai-search">
-      <h2 class="category-title">Ai搜索</h2>
+      <h2 class="category-title">AI 搜索</h2>
       <div class="link-grid"></div>
     </section>
+
     <section id="social">
       <h2 class="category-title">社交媒体</h2>
       <div class="link-grid"></div>
     </section>
+
     <section id="tools">
       <h2 class="category-title">实用工具</h2>
       <div class="link-grid"></div>
     </section>
+
     <section id="tech-news">
       <h2 class="category-title">科技资讯</h2>
       <div class="link-grid"></div>
     </section>
+
     <section id="cloud-storage">
       <h2 class="category-title">云存储</h2>
       <div class="link-grid"></div>
     </section>
+
     <section id="email">
       <h2 class="category-title">电子邮箱</h2>
       <div class="link-grid"></div>
     </section>
+
+    <noscript>
+      <p class="status is-error">本站需要启用 JavaScript 才能加载链接列表。</p>
+    </noscript>
   </main>
-  <div id="edit-form" style="display: none;">
-    <h2>添加/编辑链接</h2>
-    <form id="link-form">
-      <input type="password" id="edit-password" name="edit_password" placeholder="编辑密码" required>
-      <select id="category" name="category" required>
-        <option value="">选择类别</option>
-        <option value="ai-search">Ai搜索</option>
-        <option value="social">社交媒体</option>
-        <option value="tools">实用工具</option>
-        <option value="tech-news">科技资讯</option>
-        <option value="cloud-storage">云存储</option>
-        <option value="email">电子邮箱</option>
-      </select>
-      <input type="text" id="title" name="title" placeholder="标题" required>
-      <input type="url" id="url" name="url" placeholder="URL" required>
-      <input type="text" id="icon" name="icon" placeholder="图标类名" required>
-      <button type="submit">保存</button>
-    </form>
-  </div>
-  <button id="toggle-edit">编辑模式</button>
+
   <footer>
-    <p>&copy; 2023 WebNav Hub. 保留所有权利。</p>
-    <nav>
-      <a href="#">隐私政策</a>
-      <a href="#">使用条款</a>
-      <a href="#">联系我们</a>
-    </nav>
+    <p>&copy; <span id="year">2026</span> WebNav Hub · 基于 Cloudflare Pages 构建</p>
   </footer>
+
+  <div class="float-stack">
+    <button id="add-link" class="btn btn-primary float-btn float-add" type="button">
+      <i class="fas fa-plus" aria-hidden="true"></i>
+      <span>添加链接</span>
+    </button>
+    <button id="toggle-edit" class="btn float-btn float-toggle" type="button" aria-pressed="false">
+      <i id="toggle-icon" class="fas fa-edit" aria-hidden="true"></i>
+      <span id="toggle-label">管理</span>
+    </button>
+  </div>
+
+  <dialog id="edit-dialog" aria-labelledby="dialog-title">
+    <form id="link-form" novalidate>
+      <div class="dialog-header">
+        <h2 id="dialog-title">添加链接</h2>
+        <button type="button" class="icon-btn" data-close aria-label="关闭">
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <p id="dialog-summary" class="dialog-summary" hidden></p>
+
+      <label class="field">
+        <span>编辑密码</span>
+        <input id="edit-password" name="password" type="password" autocomplete="current-password" placeholder="请输入 EDIT_PASSWORD">
+      </label>
+
+      <div id="link-fields">
+        <label class="field">
+          <span>标题</span>
+          <input id="title" name="title" type="text" maxlength="60" autocomplete="off" placeholder="例如：Cloudflare">
+        </label>
+        <label class="field">
+          <span>网址</span>
+          <input id="url" name="url" type="text" inputmode="url" autocomplete="off" placeholder="https://example.com">
+        </label>
+        <label class="field">
+          <span>分类</span>
+          <select id="category" name="category"></select>
+        </label>
+        <label class="field">
+          <span>图标类名</span>
+          <input id="icon" name="icon" type="text" autocomplete="off" placeholder="fas fa-globe">
+          <small class="hint">使用 Font Awesome 5 类名，留空则使用默认图标。</small>
+        </label>
+      </div>
+
+      <p id="form-message" class="form-message" role="status"></p>
+
+      <div class="dialog-actions">
+        <button type="button" id="delete-link" class="btn btn-danger" hidden>确认删除</button>
+        <button type="button" id="cancel-edit" class="btn btn-ghost" hidden>取消编辑</button>
+        <button type="submit" id="save-link" class="btn btn-primary">保存</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
   <script src="script.js"></script>
 </body>
 </html>
