@@ -1,7 +1,7 @@
 'use strict';
 
-const ICON_PATTERN = /^(?:fas|far|fab) fa-[a-z0-9-]+$/;
-const FALLBACK_ICON = 'fas fa-globe';
+const ICON_PATTERN = /^(?:fas|far|fab|fa-solid|fa-regular|fa-brands) fa-[a-z0-9-]+$/;
+const FALLBACK_ICON = 'fa-solid fa-globe';
 const API_ENDPOINT = '/api/links';
 
 const state = {

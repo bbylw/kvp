@@ -82,8 +82,8 @@ cd kvp
 
 ### 图标
 
-图标使用 Font Awesome 5 类名，例如 `fas fa-globe`、`fab fa-github`、`far fa-images`。
-留空时会自动使用 `fas fa-globe`。可在 [Font Awesome 图标库](https://fontawesome.com/v5/search) 查询。
+图标使用 Font Awesome 7 类名，例如 `fa-solid fa-globe`、`fa-brands fa-github`、`fa-regular fa-images`；同时兼容旧写法 `fas` / `far` / `fab`。
+留空时会自动使用 `fa-solid fa-globe`。可在 [Font Awesome 图标库](https://fontawesome.com/search) 查询。
 
 ## 接口
 
@@ -100,7 +100,7 @@ cd kvp
 - 分类必须是已知分类
 - 标题必填，最长 60 个字符
 - 网址仅允许 `http` / `https`
-- 图标类名需符合 `fas|far|fab fa-*` 格式
+- 图标类名需符合 `fa-solid|fa-regular|fa-brands`（兼容 `fas|far|fab`）加 `fa-*` 的格式
 - 链接总数上限 500 条
 
 返回内容均为 JSON；出错时包含 `error` 字段。密码比较使用哈希后的恒定时间比较。
